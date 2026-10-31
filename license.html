@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Get your KeyTrack license</title>
+    <meta
+      name="description"
+      content="Retrieve the signed KeyTrack license for your Lemon Squeezy order."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+  </head>
+  <body class="min-h-dvh bg-slate-950 font-sans text-white antialiased">
+    <header class="border-b border-white/5">
+      <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        <a href="index.html" class="flex items-center gap-2">
+          <span class="flex size-9 items-center justify-center rounded-xl bg-white text-slate-950">
+            <svg viewBox="0 0 24 24" fill="none" class="size-5" aria-hidden="true">
+              <circle cx="8.5" cy="10" r="3.5" stroke="currentColor" stroke-width="2" />
+              <path d="M11 12.5 18 19.5M15 16.5l2.5-2.5M18 19.5l2-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+          <span>
+            <span class="block text-sm font-black tracking-tight">KeyTrack</span>
+            <span class="block text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">License delivery</span>
+          </span>
+        </a>
+        <a href="index.html" class="text-xs font-bold text-slate-400 transition hover:text-white">Back to site</a>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+      <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+        <div>
+          <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-300">Already purchased</p>
+          <h1 class="mt-4 text-4xl font-black leading-tight tracking-tight sm:text-5xl">
+            Get your signed license key.
+          </h1>
+          <p class="mt-4 max-w-xl text-base leading-7 text-slate-400">
+            Enter the order ID and email from your Lemon Squeezy receipt. We verify the payment
+            with Lemon Squeezy, then sign a license key for your installation.
+          </p>
+
+          <div class="mt-6 rounded-2xl border border-emerald-400/20 bg-emerald-400/[0.06] p-4">
+            <p class="text-sm font-bold text-emerald-200">Where to find your order details</p>
+            <p class="mt-1 text-xs leading-5 text-emerald-100/70">
+              The order ID is on your receipt and in your Lemon Squeezy order confirmation email.
+              Use the same email address you used at checkout.
+            </p>
+          </div>
+
+          <a
+            href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.0/KeyTrack-0.1.0-setup.exe"
+            class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-slate-300 transition hover:text-white"
+          >
+            Download the KeyTrack installer
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="rounded-[2rem] border border-white/10 bg-slate-900/80 p-6 shadow-2xl sm:p-8">
+          <form id="license-form" class="space-y-4">
+            <div>
+              <label for="order-id" class="block text-sm font-bold text-slate-200">Order ID</label>
+              <input
+                id="order-id"
+                name="order_id"
+                inputmode="numeric"
+                autocomplete="off"
+                placeholder="1234567"
+                class="mt-2 block w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
+              />
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-bold text-slate-200">Checkout email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="you@company.com"
+                class="mt-2 block w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
+              />
+            </div>
+
+            <div>
+              <label for="company" class="block text-sm font-bold text-slate-200">
+                Company or organization <span class="font-medium text-slate-500">(optional)</span>
+              </label>
+              <input
+                id="company"
+                name="company"
+                autocomplete="organization"
+                placeholder="Sunrise Property Group"
+                class="mt-2 block w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
+              />
+              <p class="mt-1 text-xs leading-5 text-slate-500">
+                This appears on the license. If left blank, we use the name on the order.
+              </p>
+            </div>
+
+            <button
+              id="submit-button"
+              type="submit"
+              class="inline-flex h-12 w-full items-center justify-center rounded-xl bg-emerald-400 px-5 text-sm font-black text-slate-950 transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              Get my license
+            </button>
+          </form>
+
+          <p id="status" class="mt-4 hidden rounded-xl border px-4 py-3 text-sm font-semibold leading-6" role="status"></p>
+
+          <div id="result" class="mt-5 hidden">
+            <label for="license-key" class="block text-sm font-bold text-slate-200">Your license key</label>
+            <textarea
+              id="license-key"
+              rows="5"
+              readonly
+              class="mt-2 block w-full rounded-xl border border-emerald-400/30 bg-slate-950 px-4 py-3 font-mono text-xs leading-5 text-emerald-200 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
+            ></textarea>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <button
+                id="copy-button"
+                type="button"
+                class="inline-flex h-11 items-center justify-center rounded-xl bg-white px-5 text-sm font-black text-slate-950 transition hover:bg-emerald-50"
+              >
+                Copy license key
+              </button>
+              <a
+                href="index.html#pricing"
+                class="inline-flex h-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-bold text-white transition hover:bg-white/10"
+              >
+                View license tiers
+              </a>
+            </div>
+            <p class="mt-4 text-xs leading-5 text-slate-500">
+              Open KeyTrack, go to Settings, License, paste the key, and select Apply license.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="border-t border-white/5">
+      <div class="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-6 text-xs text-slate-600 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <p>KeyTrack license delivery</p>
+        <p>Need help? Contact the email on your receipt.</p>
+      </div>
+    </footer>
+
+    <script>
+      const LICENSE_API_URL = 'https://keytrack-license.joshua-c77.workers.dev';
+
+      const form = document.getElementById('license-form');
+      const orderInput = document.getElementById('order-id');
+      const emailInput = document.getElementById('email');
+      const companyInput = document.getElementById('company');
+      const submitButton = document.getElementById('submit-button');
+      const statusBox = document.getElementById('status');
+      const result = document.getElementById('result');
+      const licenseKey = document.getElementById('license-key');
+      const copyButton = document.getElementById('copy-button');
+      const params = new URLSearchParams(window.location.search);
+
+      if (params.get('order_id')) orderInput.value = params.get('order_id');
+      if (params.get('email')) emailInput.value = params.get('email');
+
+      function setStatus(message, tone) {
+        statusBox.textContent = message;
+        statusBox.className =
+          'mt-4 rounded-xl border px-4 py-3 text-sm font-semibold leading-6 ' +
+          (tone === 'success'
+            ? 'border-emerald-400/20 bg-emerald-400/10 text-emerald-200'
+            : 'border-rose-400/20 bg-rose-400/10 text-rose-200');
+      }
+
+      async function loadLicense() {
+        const orderId = orderInput.value.trim();
+        const email = emailInput.value.trim();
+        const company = companyInput.value.trim();
+
+        if (!LICENSE_API_URL) {
+          setStatus('License delivery is not configured yet. Contact support from your receipt email.', 'error');
+          return;
+        }
+
+        if (!orderId || !email) {
+          setStatus('Enter both the order ID and the email used at checkout.', 'error');
+          return;
+        }
+
+        submitButton.disabled = true;
+        submitButton.textContent = 'Verifying order...';
+        statusBox.className = 'mt-4 hidden';
+
+        try {
+          const url = new URL(LICENSE_API_URL.replace(/\/$/, '') + '/license');
+          url.searchParams.set('order_id', orderId);
+          url.searchParams.set('email', email);
+          if (company) url.searchParams.set('company', company);
+
+          const response = await fetch(url.toString());
+          const data = await response.json().catch(() => ({}));
+
+          if (!response.ok) {
+            throw new Error(data.error || 'That license could not be issued.');
+          }
+
+          licenseKey.value = data.licenseKey;
+          result.classList.remove('hidden');
+          setStatus('License ready for ' + data.company + '. Copy the key and apply it in KeyTrack.', 'success');
+          copyButton.focus();
+        } catch (error) {
+          setStatus(error instanceof Error ? error.message : 'That license could not be issued.', 'error');
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Get my license';
+        }
+      }
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        loadLicense();
+      });
+
+      copyButton.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(licenseKey.value);
+          copyButton.textContent = 'Copied';
+          window.setTimeout(() => {
+            copyButton.textContent = 'Copy license key';
+          }, 1800);
+        } catch {
+          licenseKey.select();
+          document.execCommand('copy');
+        }
+      });
+
+      if (params.get('order_id') && params.get('email')) {
+        loadLicense();
+      }
+    </script>
+  </body>
+</html>
