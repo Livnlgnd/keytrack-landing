@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Support - KeyAudit Pro</title>
+    <meta name="description" content="KeyAudit Pro setup, mobile pairing, demo workspace, license, backup, and LAN sync support." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } },
+      };
+    </script>
+  </head>
+  <body class="bg-slate-950 font-sans text-slate-300 antialiased">
+    <header class="border-b border-white/10">
+      <div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
+        <a href="index.html" class="flex items-center gap-3 text-white">
+          <span class="flex size-9 items-center justify-center rounded-xl bg-white text-slate-950">
+            <svg viewBox="0 0 24 24" fill="none" class="size-5" aria-hidden="true">
+              <circle cx="8.5" cy="10" r="3.5" stroke="currentColor" stroke-width="2" />
+              <path d="M11 12.5 18 19.5M15 16.5l2.5-2.5M18 19.5l2-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+          <span>
+            <span class="block text-sm font-black tracking-tight">KeyAudit Pro</span>
+            <span class="block text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Support</span>
+          </span>
+        </a>
+        <a href="index.html" class="text-xs font-bold text-slate-400 transition hover:text-white">Back to site</a>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+      <p class="text-xs font-black uppercase tracking-[0.2em] text-sky-300">Help center</p>
+      <h1 class="mt-3 text-4xl font-black tracking-tight text-white sm:text-5xl">How can we help?</h1>
+      <p class="mt-4 text-sm leading-7 text-slate-400">Setup guides, demo access, and contact information for KeyAudit Pro.</p>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-2">
+        <section class="rounded-3xl border border-white/10 bg-slate-900/70 p-6">
+          <h2 class="text-lg font-black text-white">Try the demo</h2>
+          <p class="mt-2 text-sm leading-6">Open the mobile app and select <strong class="text-white">Try demo workspace</strong> on the sign-in screen. The demo loads a sample apartment property, units, checkouts, and audit history without a desktop, account, or network.</p>
+          <p class="mt-3 text-xs leading-5 text-slate-500">App Review: use the demo action first. Normal standalone setup is also available from the same screen.</p>
+        </section>
+
+        <section class="rounded-3xl border border-white/10 bg-slate-900/70 p-6">
+          <h2 class="text-lg font-black text-white">Pair a phone</h2>
+          <p class="mt-2 text-sm leading-6">On the Windows desktop, open <strong class="text-white">Settings → Multi-Terminal Sync</strong>, enable network terminals, and scan the QR code from the phone. Both devices must be on the same local network.</p>
+        </section>
+
+        <section class="rounded-3xl border border-white/10 bg-slate-900/70 p-6">
+          <h2 class="text-lg font-black text-white">License and subscriptions</h2>
+          <p class="mt-2 text-sm leading-6">Buy or expand a desktop license from the website. After checkout, open the <a href="license.html" class="font-bold text-sky-300 underline decoration-sky-400/40 underline-offset-2">license page</a> with your order ID and email. For Cloud Backup or LAN Sync, paste your current license key so the add-on is merged into the upgraded key.</p>
+          <p class="mt-3 text-xs leading-5 text-slate-500">The iOS app does not sell subscriptions or link to external checkout pages.</p>
+        </section>
+
+        <section class="rounded-3xl border border-white/10 bg-slate-900/70 p-6">
+          <h2 class="text-lg font-black text-white">Backups and data</h2>
+          <p class="mt-2 text-sm leading-6">Export a JSON backup from <strong class="text-white">Settings → Local data &amp; backups</strong> before clearing app data or moving devices. Import replaces all local data on that device.</p>
+        </section>
+      </div>
+
+      <section class="mt-8 rounded-3xl border border-emerald-400/20 bg-emerald-400/[0.06] p-6">
+        <h2 class="text-xl font-black text-white">Contact support</h2>
+        <p class="mt-2 text-sm leading-7 text-slate-300">Include your company name, license type, platform (Windows/iOS/Android), and a short description of the issue. For order issues, include the Lemon Squeezy order ID.</p>
+        <a href="mailto:support@keyauditpro.com" class="mt-4 inline-flex h-11 items-center justify-center rounded-xl bg-white px-5 text-sm font-black text-slate-950 transition hover:bg-emerald-50">Email support@keyauditpro.com</a>
+      </section>
+    </main>
+
+    <footer class="border-t border-white/5">
+      <div class="mx-auto flex max-w-4xl flex-col gap-2 px-4 py-6 text-xs text-slate-600 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <p>© 2026 KeyAudit Pro. Local-first by design.</p>
+        <div class="flex gap-4">
+          <a href="privacy.html" class="hover:text-white">Privacy</a>
+          <a href="support.html" class="hover:text-white">Support</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
