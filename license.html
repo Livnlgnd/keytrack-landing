@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Get your KeyTrack license</title>
+    <title>Get your KeyAudit Pro license</title>
     <meta
       name="description"
-      content="Retrieve the signed KeyTrack license for your Lemon Squeezy order."
+      content="Retrieve the signed KeyAudit Pro license for your Lemon Squeezy order."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,7 +38,7 @@
             </svg>
           </span>
           <span>
-            <span class="block text-sm font-black tracking-tight">KeyTrack</span>
+            <span class="block text-sm font-black tracking-tight">KeyAudit Pro</span>
             <span class="block text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">License delivery</span>
           </span>
         </a>
@@ -67,10 +67,10 @@
           </div>
 
           <a
-            href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.0/KeyTrack-0.1.0-setup.exe"
+            href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.0/KeyAudit-Pro-0.1.0-setup.exe"
             class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-slate-300 transition hover:text-white"
           >
-            Download the KeyTrack installer
+            Download the KeyAudit Pro installer
             <span aria-hidden="true">→</span>
           </a>
         </div>
@@ -152,7 +152,7 @@
               </a>
             </div>
             <p class="mt-4 text-xs leading-5 text-slate-500">
-              Open KeyTrack, go to Settings, License, paste the key, and select Apply license.
+              Open KeyAudit Pro, go to Settings, License, paste the key, and select Apply license.
             </p>
           </div>
         </div>
@@ -161,7 +161,7 @@
 
     <footer class="border-t border-white/5">
       <div class="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-6 text-xs text-slate-600 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-        <p>KeyTrack license delivery</p>
+        <p>KeyAudit Pro license delivery</p>
         <p>Need help? Contact the email on your receipt.</p>
       </div>
     </footer>
@@ -226,7 +226,7 @@
 
           licenseKey.value = data.licenseKey;
           result.classList.remove('hidden');
-          setStatus('License ready for ' + data.company + '. Copy the key and apply it in KeyTrack.', 'success');
+          setStatus('License ready for ' + data.company + '. Copy the key and apply it in KeyAudit Pro.', 'success');
           copyButton.focus();
         } catch (error) {
           setStatus(error instanceof Error ? error.message : 'That license could not be issued.', 'error');
