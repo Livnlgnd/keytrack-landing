@@ -68,14 +68,16 @@
         </nav>
 
         <a
-          href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.0/KeyAudit-Pro-0.1.0-setup.exe"
+          href="#pricing"
+          data-checkout
           class="inline-flex h-10 items-center gap-2 rounded-xl bg-emerald-400 px-4 text-sm font-bold text-slate-950 transition hover:bg-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
         >
-          <svg viewBox="0 0 24 24" fill="currentColor" class="size-4" aria-hidden="true">
-            <path d="M3 5.5 10.2 4.5v6.7H3V5.5Zm8.4-1.1L21 3v8.2h-9.6V4.4ZM3 12.8h7.2v6.7L3 18.5v-5.7Zm8.4 0H21V21l-9.6-1.4v-6.8Z" />
+          <svg viewBox="0 0 24 24" fill="none" class="size-4" aria-hidden="true">
+            <circle cx="8.5" cy="10" r="3.5" stroke="currentColor" stroke-width="2" />
+            <path d="M11 12.5 18 19.5M15 16.5l2.5-2.5M18 19.5l2-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span class="hidden sm:inline">Download free trial</span>
-          <span class="sm:hidden">Trial</span>
+          <span class="hidden sm:inline">Buy KeyAudit Pro</span>
+          <span class="sm:hidden">Buy</span>
         </a>
       </div>
     </header>
@@ -104,27 +106,35 @@
 
             <div class="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
-                href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.0/KeyAudit-Pro-0.1.0-setup.exe"
+                href="#pricing"
+                data-checkout
                 class="group inline-flex h-14 items-center justify-center gap-3 rounded-2xl bg-white px-6 text-base font-black text-slate-950 shadow-glow transition hover:-translate-y-0.5 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
-                <svg viewBox="0 0 24 24" fill="currentColor" class="size-5" aria-hidden="true">
-                  <path d="M3 5.5 10.2 4.5v6.7H3V5.5Zm8.4-1.1L21 3v8.2h-9.6V4.4ZM3 12.8h7.2v6.7L3 18.5v-5.7Zm8.4 0H21V21l-9.6-1.4v-6.8Z" />
+                <svg viewBox="0 0 24 24" fill="none" class="size-5" aria-hidden="true">
+                  <circle cx="8.5" cy="10" r="3.5" stroke="currentColor" stroke-width="2" />
+                  <path d="M11 12.5 18 19.5M15 16.5l2.5-2.5M18 19.5l2-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
-                Download free trial
+                Buy KeyAudit Pro
                 <span class="transition group-hover:translate-x-0.5" aria-hidden="true">→</span>
               </a>
 
               <a
-                href="#features"
+                href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.0/KeyAudit-Pro-0.1.0-setup.exe"
+                data-trial
                 class="inline-flex h-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 text-base font-bold text-white transition hover:border-white/20 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
-                See the workflow
+                Download free trial
               </a>
             </div>
 
             <p class="mt-3 text-xs font-semibold leading-5 text-slate-500">
               Free trial: 30 days, 50 units or 5 dealership vehicles. No credit card required.
             </p>
+
+            <a href="#features" class="mt-3 inline-flex items-center gap-1 text-sm font-bold text-emerald-300 transition hover:text-emerald-200">
+              See how it works
+              <span aria-hidden="true">→</span>
+            </a>
 
             <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-medium text-slate-500">
               <span class="inline-flex items-center gap-1.5">
@@ -376,9 +386,9 @@
               <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-300">Option B</p>
               <h2 class="mt-4 text-3xl font-black tracking-tight sm:text-4xl">Sliding-scale volume licensing.</h2>
               <p class="mt-4 text-base leading-7 text-slate-400">
-                A simple unit-based framework that scales with the size of your key map. Every tier
-                includes the offline desktop app, local audit ledger, QR labels, and signed license
-                key.
+                A simple package-based framework that scales with the size of your key map. Every
+                license includes the offline desktop app, local audit ledger, QR labels, and signed
+                license key.
               </p>
 
               <div class="mt-6 rounded-2xl border border-emerald-400/20 bg-emerald-400/[0.06] p-4">
@@ -390,10 +400,27 @@
               </div>
 
               <a
-                href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.0/KeyAudit-Pro-0.1.0-setup.exe"
+                href="#pricing"
+                data-checkout
                 class="mt-6 inline-flex h-12 items-center gap-2 rounded-xl bg-white px-5 text-sm font-black text-slate-950 transition hover:bg-emerald-50"
               >
-                Download free trial
+                Buy KeyAudit Pro
+                <span aria-hidden="true">→</span>
+              </a>
+              <a
+                href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.0/KeyAudit-Pro-0.1.0-setup.exe"
+                data-trial
+                class="mt-3 inline-flex items-center gap-1 text-sm font-bold text-emerald-300 transition hover:text-emerald-200"
+              >
+                Download 30-day free trial (50 units / 5 vehicles)
+                <span aria-hidden="true">→</span>
+              </a>
+              <a
+                href="#pricing"
+                data-checkout="dealer100"
+                class="mt-2 inline-flex items-center gap-1 text-sm font-bold text-sky-300 transition hover:text-sky-200"
+              >
+                Buy dealership license (100 vehicles)
                 <span aria-hidden="true">→</span>
               </a>
             </div>
@@ -407,40 +434,69 @@
                 <span class="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-400">Volume-based</span>
               </div>
 
+              <p class="border-b border-white/5 px-5 py-2 text-[11px] font-semibold text-slate-500 sm:hidden">
+                Swipe the table to see checkout links →
+              </p>
+
               <div class="overflow-x-auto">
-                <table class="w-full min-w-[620px] text-left">
+                <table class="w-full min-w-[720px] text-left">
                   <thead class="bg-white/[0.02] text-[10px] uppercase tracking-[0.14em] text-slate-500">
                     <tr>
-                      <th class="px-5 py-3 font-bold">Unit volume</th>
-                      <th class="px-5 py-3 font-bold">Rate</th>
-                      <th class="px-5 py-3 font-bold">Tier note</th>
+                      <th class="px-5 py-3 font-bold">License coverage</th>
+                      <th class="px-5 py-3 font-bold">One-time price</th>
+                      <th class="px-5 py-3 font-bold">Checkout</th>
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-white/5 text-sm">
                     <tr class="bg-emerald-400/[0.04]">
-                      <td class="px-5 py-4 font-bold text-white">1 – 100 units</td>
-                      <td class="px-5 py-4 font-black text-emerald-300">$500 flat fee</td>
-                      <td class="px-5 py-4 text-slate-400">Trial limit fallback tier</td>
+                      <td class="px-5 py-4">
+                        <p class="font-bold text-white">Apartment · up to 100 units</p>
+                        <p class="mt-1 text-xs text-slate-500">Doors, tenants, and leasing terminology</p>
+                      </td>
+                      <td class="px-5 py-4 font-black text-emerald-300">$500</td>
+                      <td class="px-5 py-4">
+                        <a href="#pricing" data-checkout="apt100" class="font-bold text-emerald-300 transition hover:text-emerald-200">Buy apartment →</a>
+                      </td>
                     </tr>
                     <tr>
-                      <td class="px-5 py-4 font-bold text-white">101 – 500 units</td>
-                      <td class="px-5 py-4 font-black text-white">$3.50 <span class="text-xs font-semibold text-slate-500">/ unit</span></td>
-                      <td class="px-5 py-4 text-slate-400">Growing property or lot</td>
+                      <td class="px-5 py-4">
+                        <p class="font-bold text-white">Apartment · up to 500 units</p>
+                        <p class="mt-1 text-xs text-slate-500">Growing property or portfolio</p>
+                      </td>
+                      <td class="px-5 py-4 font-black text-white">$1,900</td>
+                      <td class="px-5 py-4">
+                        <a href="#pricing" data-checkout="apt500" class="font-bold text-emerald-300 transition hover:text-emerald-200">Buy apartment →</a>
+                        <p class="mt-1 text-xs text-slate-500">Dealership: contact sales</p>
+                      </td>
                     </tr>
                     <tr>
-                      <td class="px-5 py-4 font-bold text-white">501 – 1,000 units</td>
-                      <td class="px-5 py-4 font-black text-white">$2.50 <span class="text-xs font-semibold text-slate-500">/ unit</span></td>
-                      <td class="px-5 py-4 text-slate-400">Multi-building or multi-rooftop</td>
-                    </tr>
-                    <tr>
-                      <td class="px-5 py-4 font-bold text-white">1,000+ units</td>
-                      <td class="px-5 py-4 font-black text-white">$2.00 <span class="text-xs font-semibold text-slate-500">/ unit</span></td>
-                      <td class="px-5 py-4 text-slate-400">High-volume portfolio tier</td>
+                      <td class="px-5 py-4">
+                        <p class="font-bold text-white">Apartment · up to 1,000 units</p>
+                        <p class="mt-1 text-xs text-slate-500">Multi-building or multi-rooftop</p>
+                      </td>
+                      <td class="px-5 py-4 font-black text-white">$3,150</td>
+                      <td class="px-5 py-4">
+                        <a href="#pricing" data-checkout="apt1000" class="font-bold text-emerald-300 transition hover:text-emerald-200">Buy apartment →</a>
+                        <p class="mt-1 text-xs text-slate-500">Dealership: contact sales</p>
+                      </td>
                     </tr>
                     <tr class="bg-white/[0.02]">
-                      <td class="px-5 py-4 font-bold text-white">Enterprise</td>
+                      <td class="px-5 py-4">
+                        <p class="font-bold text-white">Dealership · up to 100 vehicles</p>
+                        <p class="mt-1 text-xs text-slate-500">Stock, VIN, and sales floor terminology</p>
+                      </td>
+                      <td class="px-5 py-4 font-black text-sky-300">$500</td>
+                      <td class="px-5 py-4">
+                        <a href="#pricing" data-checkout="dealer100" class="font-bold text-sky-300 transition hover:text-sky-200">Buy dealership →</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="px-5 py-4">
+                        <p class="font-bold text-white">1,000+ units / Enterprise</p>
+                        <p class="mt-1 text-xs text-slate-500">Custom deployment or larger portfolio</p>
+                      </td>
                       <td class="px-5 py-4 font-black text-white">Custom</td>
-                      <td class="px-5 py-4 text-slate-400">Contact Sales for Enterprise Custom License</td>
+                      <td class="px-5 py-4 text-slate-400">Contact sales</td>
                     </tr>
                   </tbody>
                 </table>
@@ -448,8 +504,9 @@
 
               <div class="border-t border-white/5 px-5 py-4">
                 <p class="text-xs leading-5 text-slate-500">
-                  Need a volume that does not fit a row? Contact sales for a custom signed license
-                  string.
+                  One-time purchase. Checkout is securely handled by Lemon Squeezy. Need a larger
+                  dealership tier or more than 1,000 units? Contact sales for a custom signed
+                  license.
                 </p>
               </div>
             </div>
@@ -466,22 +523,25 @@
               Own your key data. Literally.
             </h2>
             <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">
-              Install KeyAudit Pro on Windows, create your local workspace, and start scanning. No
-              signup, no cloud database, and no waiting for a sync server.
+              Install KeyAudit Pro on Windows and start scanning. Start with a free trial, or buy a
+              signed license when you are ready to add more units. No signup, no cloud database,
+              and no waiting for a sync server.
             </p>
             <div class="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
-                href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.0/KeyAudit-Pro-0.1.0-setup.exe"
+                href="#pricing"
+                data-checkout
                 class="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-sm font-black text-slate-950 transition hover:bg-emerald-50"
               >
-                Download free trial
+                Buy KeyAudit Pro
                 <span aria-hidden="true">→</span>
               </a>
               <a
-                href="#pricing"
+                href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.0/KeyAudit-Pro-0.1.0-setup.exe"
+                data-trial
                 class="inline-flex h-12 items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-white/10"
               >
-                View volume pricing
+                Download free trial
               </a>
             </div>
           </div>
@@ -509,11 +569,32 @@
           <a href="#industries" class="hover:text-white">Industries</a>
           <a href="#pricing" class="hover:text-white">Pricing</a>
           <a href="license.html" class="hover:text-white">Get your license</a>
-          <span>Windows desktop app</span>
+          <a
+            href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.0/KeyAudit-Pro-0.1.0-setup.exe"
+            data-trial
+            class="hover:text-white"
+          >
+            Free trial
+          </a>
         </div>
 
         <p class="text-xs text-slate-600">© 2026 KeyAudit Pro. Local-first by design.</p>
       </div>
     </footer>
+
+    <script>
+      window.KEYTRACK_CHECKOUT_URLS = {
+        apt100: 'https://keytracker.lemonsqueezy.com/checkout/buy/23ddd5eb-35c2-4138-b41d-020225ebbffa?embed=1',
+        apt500: 'https://keytracker.lemonsqueezy.com/checkout/buy/3ef0d440-642e-402d-a19c-c4cd01b5fc66?embed=1',
+        apt1000: 'https://keytracker.lemonsqueezy.com/checkout/buy/446eb5d3-0921-4e6a-9c07-3115c28c8392?embed=1',
+        dealer100: 'https://keytracker.lemonsqueezy.com/checkout/buy/aaf94c70-875f-4736-98c1-27476b20be48?embed=1',
+      };
+
+      document.querySelectorAll('[data-checkout]').forEach((link) => {
+        const plan = link.getAttribute('data-checkout') || 'apt100';
+        const url = window.KEYTRACK_CHECKOUT_URLS[plan];
+        if (url) link.setAttribute('href', url);
+      });
+    </script>
   </body>
 </html>
