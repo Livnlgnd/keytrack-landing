@@ -67,7 +67,7 @@
           </div>
 
           <a
-            href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.6/KeyAudit-Pro-0.1.6-setup.exe"
+            href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.7/KeyAudit-Pro-0.1.7-setup.exe"
             class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-slate-300 transition hover:text-white"
           >
             Download the KeyAudit Pro installer
@@ -103,7 +103,7 @@
 
             <div>
               <label for="current-license-key" class="block text-sm font-bold text-slate-200">
-                Current KeyAudit Pro license key <span class="font-medium text-slate-500">(for Cloud Backup upgrades)</span>
+                Current KeyAudit Pro license key <span class="font-medium text-slate-500">(for Cloud Backup or LAN Sync upgrades)</span>
               </label>
               <textarea
                 id="current-license-key"
@@ -113,7 +113,7 @@
                 class="mt-2 block w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 font-mono text-xs leading-5 text-white placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
               ></textarea>
               <p class="mt-1 text-xs leading-5 text-slate-500">
-                Required when adding Cloud Backup to an existing license. Leave blank for a new desktop license.
+                Required when adding Cloud Backup or LAN Sync to an existing license. Leave blank for a new desktop license.
               </p>
             </div>
 
@@ -248,7 +248,10 @@
           const expires = data.backupExpiresAt
             ? ' Cloud Backup is active until ' + new Date(data.backupExpiresAt).toLocaleDateString() + '.'
             : '';
-          setStatus('License ready for ' + data.company + '.' + expires + ' Copy the key and apply it in KeyAudit Pro.', 'success');
+          const lanSync = data.lanSyncExpiresAt
+            ? ' LAN Sync is active until ' + new Date(data.lanSyncExpiresAt).toLocaleDateString() + '.'
+            : '';
+          setStatus('License ready for ' + data.company + '.' + expires + lanSync + ' Copy the key and apply it in KeyAudit Pro.', 'success');
           copyButton.focus();
         } catch (error) {
           setStatus(error instanceof Error ? error.message : 'That license could not be issued.', 'error');
@@ -277,7 +280,7 @@
       });
 
       if (params.get('order_id') && params.get('email')) {
-        setStatus('Order details found. If this is a Cloud Backup subscription, paste your current license key above, then select Get my license.', 'success');
+        setStatus('Order details found. If this is a Cloud Backup or LAN Sync subscription, paste your current license key above, then select Get my license.', 'success');
       }
     </script>
   </body>
