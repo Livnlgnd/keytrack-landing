@@ -41,6 +41,44 @@
         color: #64748b;
         line-height: 1.5;
       }
+      .plan-label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .plan-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+      select,
+      button {
+        min-height: 44px;
+        border-radius: 8px;
+        font: inherit;
+      }
+      select {
+        width: 100%;
+        border: 1px solid #cbd5e1;
+        background: #ffffff;
+        padding: 0 12px;
+        color: #1f2937;
+      }
+      button {
+        border: 0;
+        background: #0570de;
+        color: #ffffff;
+        padding: 0 18px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button:disabled,
+      select:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
       #checkout-form {
         min-height: 120px;
       }
@@ -57,9 +95,15 @@
         background: #fef2f2;
         color: #b91c1c;
       }
-      #status[data-state="success"] {
+      #status[data-state="success"],
+      #status[data-state="ready"] {
         background: #f0fdf4;
         color: #15803d;
+      }
+      @media (max-width: 520px) {
+        .plan-row {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
@@ -67,6 +111,15 @@
     <main>
       <h1>Complete your purchase</h1>
       <p>Secure payment powered by Stripe.</p>
+
+      <label class="plan-label" for="plan">Choose a plan</label>
+      <div class="plan-row">
+        <select id="plan" disabled>
+          <option>Loading plans...</option>
+        </select>
+        <button id="start" type="button" disabled>Continue to payment</button>
+      </div>
+
       <div id="checkout-form"></div>
       <div id="status" data-state="loading">Preparing secure checkout...</div>
     </main>
@@ -76,6 +129,8 @@
         'pk_live_51UXQwhPlnAdoCAVXG0IQQwGGlUNnfdVokvkPB3RDBBbgG5qgQUINZfFGtq21wN2ITwR7eJfqxnZE9vNYQNglyr4n00MwHueF9D';
       const CHECKOUT_API_URL =
         'https://keytrack-license.joshua-c77.workers.dev/api/stripe/checkout-session';
+      const PLANS_API_URL =
+        'https://keytrack-license.joshua-c77.workers.dev/api/stripe/plans';
 
       const appearance = {
         theme: 'stripe',
@@ -95,18 +150,79 @@
       };
 
       const statusBox = document.getElementById('status');
+      const planSelect = document.getElementById('plan');
+      const startButton = document.getElementById('start');
 
       function setStatus(message, state) {
         statusBox.textContent = message;
         statusBox.dataset.state = state;
       }
 
-      async function mountCheckout() {
+      function renderPlans(plans) {
+        const groups = [
+          ['license', 'Licenses'],
+          ['cloud-backup', 'Cloud Backup'],
+          ['lan-sync', 'LAN Sync'],
+        ];
+        const preselected = new URLSearchParams(window.location.search).get(
+          'price_id',
+        );
+
+        planSelect.replaceChildren();
+        for (const [kind, label] of groups) {
+          const items = plans
+            .filter((plan) => plan.kind === kind)
+            .sort((a, b) => a.name.localeCompare(b.name));
+          if (!items.length) continue;
+
+          const group = document.createElement('optgroup');
+          group.label = label;
+          for (const plan of items) {
+            const option = document.createElement('option');
+            option.value = plan.priceId;
+            option.textContent = plan.name;
+            if (plan.priceId === preselected) option.selected = true;
+            group.append(option);
+          }
+          planSelect.append(group);
+        }
+
+        if (!planSelect.options.length) {
+          throw new Error('No checkout plans are available.');
+        }
+
+        planSelect.disabled = false;
+        startButton.disabled = false;
+        setStatus('Choose a plan, then continue to payment.', 'ready');
+      }
+
+      async function loadPlans() {
+        try {
+          const response = await fetch(PLANS_API_URL);
+          const json = await response.json();
+          if (!response.ok || !Array.isArray(json.plans)) {
+            throw new Error(json.error || 'Unable to load plans.');
+          }
+          renderPlans(json.plans);
+        } catch (error) {
+          console.error('Plans error:', error);
+          setStatus(
+            error instanceof Error ? error.message : 'Unable to load plans.',
+            'error',
+          );
+        }
+      }
+
+      async function mountCheckout(priceId) {
+        startButton.disabled = true;
+        planSelect.disabled = true;
+        setStatus('Preparing secure checkout...', 'loading');
+
         try {
           const response = await fetch(CHECKOUT_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: '{}',
+            body: JSON.stringify({ price_id: priceId }),
           });
           const json = await response.json();
 
@@ -150,10 +266,16 @@
             error instanceof Error ? error.message : 'Unable to load checkout.',
             'error',
           );
+          planSelect.disabled = false;
+          startButton.disabled = false;
         }
       }
 
-      mountCheckout();
+      startButton.addEventListener('click', () => {
+        if (planSelect.value) mountCheckout(planSelect.value);
+      });
+
+      loadPlans();
     </script>
   </body>
 </html>
