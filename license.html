@@ -348,7 +348,8 @@
       syncDownloadButton();
 
       if (isStripe && stripeSessionId) {
-        setStatus('Stripe checkout found. Add your company name for a new license, or paste your current license key for an add-on, then select Get my license.', 'success');
+        setStatus('Payment received. Generating your license...', 'loading');
+        loadLicense();
       } else if (params.get('order_id') && params.get('email')) {
         setStatus('Order details found. If this is a Cloud Backup or LAN Sync subscription, paste your current license key above, then select Get my license.', 'success');
       }
