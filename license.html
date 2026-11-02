@@ -6,7 +6,7 @@
     <title>Get your KeyAudit Pro license</title>
     <meta
       name="description"
-      content="Retrieve the signed KeyAudit Pro license for your Lemon Squeezy order."
+      content="Retrieve the signed KeyAudit Pro license for your purchase."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -54,15 +54,16 @@
             Get your signed license key.
           </h1>
           <p class="mt-4 max-w-xl text-base leading-7 text-slate-400">
-            Enter the order ID and email from your Lemon Squeezy receipt. We verify the payment
-            with Lemon Squeezy, then sign a license key for your installation.
+            Enter your Stripe checkout session ID. We verify the payment with Stripe, then sign a
+            license key for your installation. Existing Lemon Squeezy orders can still use their
+            order ID and checkout email.
           </p>
 
           <div class="mt-6 rounded-2xl border border-emerald-400/20 bg-emerald-400/[0.06] p-4">
-            <p class="text-sm font-bold text-emerald-200">Where to find your order details</p>
+            <p class="text-sm font-bold text-emerald-200">Where to find your checkout details</p>
             <p class="mt-1 text-xs leading-5 text-emerald-100/70">
-              The order ID is on your receipt and in your Lemon Squeezy order confirmation email.
-              Use the same email address you used at checkout.
+              Stripe session IDs start with <strong class="font-bold">cs_live_</strong>. For older
+              Lemon Squeezy orders, use the order ID and the email address from checkout.
             </p>
           </div>
 
@@ -78,19 +79,19 @@
         <div class="rounded-[2rem] border border-white/10 bg-slate-900/80 p-6 shadow-2xl sm:p-8">
           <form id="license-form" class="space-y-4">
             <div>
-              <label for="order-id" class="block text-sm font-bold text-slate-200">Order ID</label>
+              <label for="order-id" class="block text-sm font-bold text-slate-200">Order or session ID</label>
               <input
                 id="order-id"
                 name="order_id"
-                inputmode="numeric"
+                inputmode="text"
                 autocomplete="off"
-                placeholder="1234567"
+                placeholder="cs_live_... or order ID"
                 class="mt-2 block w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
               />
             </div>
 
             <div>
-              <label for="email" class="block text-sm font-bold text-slate-200">Checkout email</label>
+              <label for="email" class="block text-sm font-bold text-slate-200">Checkout email (Lemon Squeezy orders)</label>
               <input
                 id="email"
                 name="email"
@@ -249,15 +250,16 @@
         const email = emailInput.value.trim();
         const currentLicenseKey = currentLicenseKeyInput.value.trim();
         const company = companyInput.value.trim();
+        const stripeCheckout = isStripe || orderId.startsWith('cs_');
 
         if (!LICENSE_API_URL) {
           setStatus('License delivery is not configured yet. Contact support from your receipt email.', 'error');
           return;
         }
 
-        if (isStripe ? !orderId : !orderId || !email) {
+        if (stripeCheckout ? !orderId : !orderId || !email) {
           setStatus(
-            isStripe
+            stripeCheckout
               ? 'Enter the Stripe checkout session ID.'
               : 'Enter both the order ID and the email used at checkout.',
             'error',
@@ -272,9 +274,9 @@
         try {
           const url = new URL(
             LICENSE_API_URL.replace(/\/$/, '') +
-              (isStripe ? '/api/stripe/license' : '/license'),
+              (stripeCheckout ? '/api/stripe/license' : '/license'),
           );
-          if (isStripe) {
+          if (stripeCheckout) {
             url.searchParams.set('session_id', orderId);
           } else {
             url.searchParams.set('order_id', orderId);
