@@ -67,7 +67,7 @@
           </div>
 
           <a
-            href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.12/KeyAudit-Pro-0.1.12-setup.exe"
+            href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.13/KeyAudit-Pro-0.1.13-setup.exe"
             class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-slate-300 transition hover:text-white"
           >
             Download the KeyAudit Pro installer
@@ -161,8 +161,10 @@
                 Copy license key
               </button>
               <a
-                href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.12/KeyAudit-Pro-0.1.12-setup.exe"
-                class="inline-flex h-11 items-center justify-center rounded-xl bg-emerald-400 px-5 text-sm font-black text-slate-950 transition hover:bg-emerald-300"
+                id="download-button"
+                href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.13/KeyAudit-Pro-0.1.13-setup.exe"
+                aria-disabled="true"
+                class="inline-flex h-11 items-center justify-center rounded-xl bg-emerald-400 px-5 text-sm font-black text-slate-950 opacity-50 transition hover:bg-emerald-300"
               >
                 Download KeyAudit Pro
               </a>
@@ -173,6 +175,16 @@
                 View license tiers
               </a>
             </div>
+            <label class="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3">
+              <input
+                id="license-tos-agree"
+                type="checkbox"
+                class="mt-0.5 size-4 shrink-0 rounded border-white/20 bg-slate-900 text-emerald-400 focus:ring-emerald-400"
+              />
+              <span class="text-xs leading-5 text-slate-400">
+                By installing KeyAudit Pro, you agree that this software is licensed, not sold, under a proprietary commercial agreement. You may not reverse-engineer, crack, or run this standalone program on more devices than permitted by your active cryptographic license key.
+              </span>
+            </label>
             <p class="mt-4 text-xs leading-5 text-slate-500">
               Download and install KeyAudit Pro, then open Settings, License, paste the key, and select Apply license.
             </p>
@@ -183,7 +195,7 @@
 
     <footer class="border-t border-white/5">
       <div class="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-6 text-xs text-slate-600 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-        <p>KeyAudit Pro license delivery</p>
+        <p>© 2026 Vybelive LLC. KeyAudit Pro license delivery.</p>
         <div class="flex gap-4">
           <a href="privacy.html" class="hover:text-white">Privacy</a>
           <a href="support.html" class="hover:text-white">Support</a>
@@ -287,6 +299,25 @@
           document.execCommand('copy');
         }
       });
+
+      const downloadButton = document.getElementById('download-button');
+      const licenseTosAgree = document.getElementById('license-tos-agree');
+
+      function syncDownloadButton() {
+        const agreed = Boolean(licenseTosAgree?.checked);
+        downloadButton?.setAttribute('aria-disabled', String(!agreed));
+        downloadButton?.classList.toggle('opacity-50', !agreed);
+      }
+
+      licenseTosAgree?.addEventListener('change', syncDownloadButton);
+      downloadButton?.addEventListener('click', (event) => {
+        if (!licenseTosAgree?.checked) {
+          event.preventDefault();
+          licenseTosAgree?.focus();
+          licenseTosAgree?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+      syncDownloadButton();
 
       if (params.get('order_id') && params.get('email')) {
         setStatus('Order details found. If this is a Cloud Backup or LAN Sync subscription, paste your current license key above, then select Get my license.', 'success');
