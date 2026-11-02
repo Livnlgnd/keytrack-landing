@@ -158,15 +158,15 @@
         statusBox.dataset.state = state;
       }
 
-      function renderPlans(plans) {
+      function renderPlans(plans, defaultPriceId) {
         const groups = [
           ['license', 'Licenses'],
           ['cloud-backup', 'Cloud Backup'],
           ['lan-sync', 'LAN Sync'],
         ];
-        const preselected = new URLSearchParams(window.location.search).get(
-          'price_id',
-        );
+        const preselected =
+          new URLSearchParams(window.location.search).get('price_id') ||
+          defaultPriceId;
 
         planSelect.replaceChildren();
         for (const [kind, label] of groups) {
@@ -203,7 +203,7 @@
           if (!response.ok || !Array.isArray(json.plans)) {
             throw new Error(json.error || 'Unable to load plans.');
           }
-          renderPlans(json.plans);
+          renderPlans(json.plans, json.defaultPriceId);
         } catch (error) {
           console.error('Plans error:', error);
           setStatus(
