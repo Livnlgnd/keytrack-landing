@@ -217,9 +217,23 @@
       const licenseKey = document.getElementById('license-key');
       const copyButton = document.getElementById('copy-button');
       const params = new URLSearchParams(window.location.search);
+      const stripeSessionId = params.get('session_id');
+      const isStripe =
+        params.get('provider') === 'stripe' ||
+        Boolean(stripeSessionId && stripeSessionId.startsWith('cs_'));
+      const emailGroup = emailInput.closest('div');
 
       if (params.get('order_id')) orderInput.value = params.get('order_id');
       if (params.get('email')) emailInput.value = params.get('email');
+
+      if (isStripe) {
+        const orderLabel = document.querySelector('label[for="order-id"]');
+        if (orderLabel) orderLabel.textContent = 'Stripe checkout session ID';
+        orderInput.inputMode = 'text';
+        orderInput.placeholder = 'cs_test_...';
+        orderInput.value = stripeSessionId || orderInput.value;
+        emailGroup?.classList.add('hidden');
+      }
 
       function setStatus(message, tone) {
         statusBox.textContent = message;
@@ -241,19 +255,31 @@
           return;
         }
 
-        if (!orderId || !email) {
-          setStatus('Enter both the order ID and the email used at checkout.', 'error');
+        if (isStripe ? !orderId : !orderId || !email) {
+          setStatus(
+            isStripe
+              ? 'Enter the Stripe checkout session ID.'
+              : 'Enter both the order ID and the email used at checkout.',
+            'error',
+          );
           return;
         }
 
         submitButton.disabled = true;
-        submitButton.textContent = 'Verifying order...';
+        submitButton.textContent = 'Verifying checkout...';
         statusBox.className = 'mt-4 hidden';
 
         try {
-          const url = new URL(LICENSE_API_URL.replace(/\/$/, '') + '/license');
-          url.searchParams.set('order_id', orderId);
-          url.searchParams.set('email', email);
+          const url = new URL(
+            LICENSE_API_URL.replace(/\/$/, '') +
+              (isStripe ? '/api/stripe/license' : '/license'),
+          );
+          if (isStripe) {
+            url.searchParams.set('session_id', orderId);
+          } else {
+            url.searchParams.set('order_id', orderId);
+            url.searchParams.set('email', email);
+          }
           if (currentLicenseKey) url.searchParams.set('current_license_key', currentLicenseKey);
           if (company) url.searchParams.set('company', company);
 
@@ -319,7 +345,9 @@
       });
       syncDownloadButton();
 
-      if (params.get('order_id') && params.get('email')) {
+      if (isStripe && stripeSessionId) {
+        setStatus('Stripe checkout found. Add your company name for a new license, or paste your current license key for an add-on, then select Get my license.', 'success');
+      } else if (params.get('order_id') && params.get('email')) {
         setStatus('Order details found. If this is a Cloud Backup or LAN Sync subscription, paste your current license key above, then select Get my license.', 'success');
       }
     </script>
