@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Checkout | KeyAudit Pro</title>
+    <script src="https://js.stripe.com/dahlia/stripe.js"></script>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background: #f4f6f8;
+        color: #1f2937;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 32px 16px;
+        display: grid;
+        place-items: center;
+      }
+      main {
+        width: 100%;
+        max-width: 720px;
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow: 0 20px 50px rgb(15 23 42 / 10%);
+        padding: 28px;
+      }
+      h1 {
+        margin: 0 0 6px;
+        font-size: 24px;
+      }
+      p {
+        margin: 0 0 22px;
+        color: #64748b;
+        line-height: 1.5;
+      }
+      #checkout-form {
+        min-height: 120px;
+      }
+      #status {
+        margin-top: 18px;
+        padding: 12px 14px;
+        border-radius: 8px;
+        background: #f1f5f9;
+        color: #475569;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      #status[data-state="error"] {
+        background: #fef2f2;
+        color: #b91c1c;
+      }
+      #status[data-state="success"] {
+        background: #f0fdf4;
+        color: #15803d;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Complete your purchase</h1>
+      <p>Secure payment powered by Stripe.</p>
+      <div id="checkout-form"></div>
+      <div id="status" data-state="loading">Preparing secure checkout...</div>
+    </main>
+
+    <script>
+      const STRIPE_PUBLISHABLE_KEY = 'pk_test_...';
+      const CHECKOUT_API_URL =
+        'https://keytrack-license.joshua-c77.workers.dev/api/stripe/checkout-session';
+
+      const appearance = {
+        theme: 'stripe',
+        labels: 'auto',
+        inputs: 'spaced',
+        variables: {
+          borderRadius: '4px',
+          colorBackground: '#ffffff',
+          colorDanger: '#df1b41',
+          colorPrimary: '#0570de',
+          colorSuccess: '#00c853',
+          colorText: '#30313d',
+          fontFamily: 'default',
+          fontSizeBase: '16px',
+          spacingUnit: '4px',
+        },
+      };
+
+      const statusBox = document.getElementById('status');
+
+      function setStatus(message, state) {
+        statusBox.textContent = message;
+        statusBox.dataset.state = state;
+      }
+
+      async function mountCheckout() {
+        try {
+          const response = await fetch(CHECKOUT_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: '{}',
+          });
+          const json = await response.json();
+
+          if (!response.ok || !json.client_secret) {
+            throw new Error(json.error || 'Unable to start checkout.');
+          }
+
+          const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+          const checkout = stripe.initCheckoutFormSdk({
+            clientSecret: json.client_secret,
+            appearance,
+          });
+          const form = checkout.createForm({ layout: 'expanded' });
+          form.mount('#checkout-form');
+
+          const loadActionsResult = await checkout.loadActions();
+          if (loadActionsResult.type !== 'success') {
+            throw new Error('Unable to load checkout actions.');
+          }
+
+          form.on('confirm', async (event) => {
+            try {
+              await loadActionsResult.actions.confirm({
+                formConfirmEvent: event,
+              });
+            } catch (error) {
+              console.error('Payment confirmation error:', error);
+              setStatus(
+                error instanceof Error
+                  ? error.message
+                  : 'Payment confirmation failed.',
+                'error',
+              );
+            }
+          });
+
+          setStatus('Checkout is ready.', 'ready');
+        } catch (error) {
+          console.error('Checkout error:', error);
+          setStatus(
+            error instanceof Error ? error.message : 'Unable to load checkout.',
+            'error',
+          );
+        }
+      }
+
+      mountCheckout();
+    </script>
+  </body>
+</html>
