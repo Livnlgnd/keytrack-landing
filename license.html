@@ -55,20 +55,21 @@
           </h1>
           <p class="mt-4 max-w-xl text-base leading-7 text-slate-400">
             Enter your Stripe checkout session ID. We verify the payment with Stripe, then sign a
-            license key for your installation. Existing Lemon Squeezy orders can still use their
-            order ID and checkout email.
+            license key for your installation. After checkout, Stripe returns you here with the
+            session ID filled in automatically.
           </p>
 
           <div class="mt-6 rounded-2xl border border-emerald-400/20 bg-emerald-400/[0.06] p-4">
             <p class="text-sm font-bold text-emerald-200">Where to find your checkout details</p>
             <p class="mt-1 text-xs leading-5 text-emerald-100/70">
-              Stripe session IDs start with <strong class="font-bold">cs_live_</strong>. For older
-              Lemon Squeezy orders, use the order ID and the email address from checkout.
+              Stripe session IDs start with <strong class="font-bold">cs_live_</strong> or
+              <strong class="font-bold">cs_test_</strong>. Use the session ID from your Stripe
+              receipt or the return link shown after payment.
             </p>
           </div>
 
           <a
-            href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.16/KeyAudit-Pro-0.1.16-setup.exe"
+            href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.19/KeyAudit-Pro-0.1.19-setup.exe"
             class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-slate-300 transition hover:text-white"
           >
             Download the KeyAudit Pro installer
@@ -79,25 +80,13 @@
         <div class="rounded-[2rem] border border-white/10 bg-slate-900/80 p-6 shadow-2xl sm:p-8">
           <form id="license-form" class="space-y-4">
             <div>
-              <label for="order-id" class="block text-sm font-bold text-slate-200">Order or session ID</label>
+              <label for="order-id" class="block text-sm font-bold text-slate-200">Stripe checkout session ID</label>
               <input
                 id="order-id"
-                name="order_id"
+                name="session_id"
                 inputmode="text"
                 autocomplete="off"
-                placeholder="cs_live_... or order ID"
-                class="mt-2 block w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
-              />
-            </div>
-
-            <div>
-              <label for="email" class="block text-sm font-bold text-slate-200">Checkout email (Lemon Squeezy orders)</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                placeholder="you@company.com"
+                placeholder="cs_live_..."
                 class="mt-2 block w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
               />
             </div>
@@ -163,7 +152,7 @@
               </button>
               <a
                 id="download-button"
-                href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.16/KeyAudit-Pro-0.1.16-setup.exe"
+                href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.19/KeyAudit-Pro-0.1.19-setup.exe"
                 aria-disabled="true"
                 class="inline-flex h-11 items-center justify-center rounded-xl bg-emerald-400 px-5 text-sm font-black text-slate-950 opacity-50 transition hover:bg-emerald-300"
               >
@@ -210,7 +199,6 @@
 
       const form = document.getElementById('license-form');
       const orderInput = document.getElementById('order-id');
-      const emailInput = document.getElementById('email');
       const currentLicenseKeyInput = document.getElementById('current-license-key');
       const companyInput = document.getElementById('company');
       const submitButton = document.getElementById('submit-button');
@@ -219,23 +207,9 @@
       const licenseKey = document.getElementById('license-key');
       const copyButton = document.getElementById('copy-button');
       const params = new URLSearchParams(window.location.search);
-      const stripeSessionId = params.get('session_id');
-      const isStripe =
-        params.get('provider') === 'stripe' ||
-        Boolean(stripeSessionId && stripeSessionId.startsWith('cs_'));
-      const emailGroup = emailInput.closest('div');
+      const stripeSessionId = params.get('session_id')?.trim() || '';
 
-      if (params.get('order_id')) orderInput.value = params.get('order_id');
-      if (params.get('email')) emailInput.value = params.get('email');
-
-      if (isStripe) {
-        const orderLabel = document.querySelector('label[for="order-id"]');
-        if (orderLabel) orderLabel.textContent = 'Stripe checkout session ID';
-        orderInput.inputMode = 'text';
-        orderInput.placeholder = 'cs_test_...';
-        orderInput.value = stripeSessionId || orderInput.value;
-        emailGroup?.classList.add('hidden');
-      }
+      if (stripeSessionId) orderInput.value = stripeSessionId;
 
       function setStatus(message, tone) {
         statusBox.textContent = message;
@@ -248,23 +222,16 @@
 
       async function loadLicense() {
         const orderId = orderInput.value.trim();
-        const email = emailInput.value.trim();
         const currentLicenseKey = currentLicenseKeyInput.value.trim();
         const company = companyInput.value.trim();
-        const stripeCheckout = isStripe || orderId.startsWith('cs_');
 
         if (!LICENSE_API_URL) {
           setStatus('License delivery is not configured yet. Contact support from your receipt email.', 'error');
           return;
         }
 
-        if (stripeCheckout ? !orderId : !orderId || !email) {
-          setStatus(
-            stripeCheckout
-              ? 'Enter the Stripe checkout session ID.'
-              : 'Enter both the order ID and the email used at checkout.',
-            'error',
-          );
+        if (!orderId) {
+          setStatus('Enter the Stripe checkout session ID.', 'error');
           return;
         }
 
@@ -274,15 +241,9 @@
 
         try {
           const url = new URL(
-            LICENSE_API_URL.replace(/\/$/, '') +
-              (stripeCheckout ? '/api/stripe/license' : '/license'),
+            LICENSE_API_URL.replace(/\/$/, '') + '/api/stripe/license',
           );
-          if (stripeCheckout) {
-            url.searchParams.set('session_id', orderId);
-          } else {
-            url.searchParams.set('order_id', orderId);
-            url.searchParams.set('email', email);
-          }
+          url.searchParams.set('session_id', orderId);
           if (currentLicenseKey) url.searchParams.set('current_license_key', currentLicenseKey);
           if (company) url.searchParams.set('company', company);
 
@@ -348,11 +309,9 @@
       });
       syncDownloadButton();
 
-      if (isStripe && stripeSessionId) {
+      if (stripeSessionId) {
         setStatus('Payment received. Generating your license...', 'loading');
         loadLicense();
-      } else if (params.get('order_id') && params.get('email')) {
-        setStatus('Order details found. If this is a Cloud Backup or LAN Sync subscription, paste your current license key above, then select Get my license.', 'success');
       }
     </script>
   </body>
