@@ -56,6 +56,11 @@
         </section>
 
         <section>
+          <h2 class="text-xl font-black text-white">License activation and revocation</h2>
+          <p class="mt-2">When you apply a paid license, the app sends the license key, a random device identifier, platform type, app version, and check-in timestamps to our license service over HTTPS. We use this to count active devices, detect unauthorized sharing, and enforce license revocation for violations of our Terms of Service. The service stores a SHA-256 fingerprint of the license key rather than the key itself, and we do not collect your key inventory or workspace contents in this check-in.</p>
+        </section>
+
+        <section>
           <h2 class="text-xl font-black text-white">Optional cloud backup</h2>
           <p class="mt-2">Cloud backup is disabled by default and is available only with an eligible paid license. When enabled, the app encrypts the backup locally with AES-256-GCM before uploading it. The backup service stores encrypted ciphertext and metadata needed to associate it with your license. We cannot read your workspace contents without your license key.</p>
         </section>
