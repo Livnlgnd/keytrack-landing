@@ -1,6 +1,20 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+      (function () {
+        var standalone =
+          (window.matchMedia &&
+            window.matchMedia('(display-mode: standalone)').matches) ||
+          window.navigator.standalone === true;
+        var mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(
+          window.navigator.userAgent || '',
+        );
+        if (standalone || mobile) {
+          window.location.replace('/app/');
+        }
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Download the App - KeyAudit Pro</title>

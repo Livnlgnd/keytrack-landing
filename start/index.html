@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script src="/install-app.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KeyAudit Pro Demo &amp; Free Trial | Windows and macOS</title>
@@ -15,6 +16,10 @@
         theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } },
       };
     </script>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/app/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="KeyAudit Pro" />
   </head>
   <body class="min-h-dvh bg-white font-sans text-slate-900 antialiased">
     <main class="relative overflow-hidden">
@@ -81,7 +86,7 @@
 
           <div class="mt-5 grid gap-3 sm:grid-cols-2">
             <a
-              href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.32/KeyAudit-Pro-0.1.32-setup.exe"
+              href="https://github.com/Livnlgnd/keytrack-landing/releases/download/v0.1.33/KeyAudit-Pro-0.1.33-setup.exe"
               class="inline-flex h-12 items-center justify-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-bold transition hover:bg-slate-100"
             >
               Download for Windows
