@@ -1,15 +1,96 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Redirecting - KeyAudit Pro</title>
     <script>
       (function () {
         var path = window.location.pathname;
-        window.location.replace(path.indexOf('/app/') === 0 ? '/app/' : '/');
+        if (path.indexOf('/app') === 0) {
+          window.location.replace('/app/');
+        }
       })();
     </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <meta name="robots" content="noindex,follow" />
+    <title>Page not found - KeyAudit Pro</title>
+    <link rel="icon" type="image/svg+xml" href="/app/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } },
+      };
+    </script>
   </head>
-  <body></body>
+  <body class="min-h-dvh bg-white font-sans text-slate-900 antialiased">
+    <header class="border-b border-slate-200">
+      <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
+        <a href="/" class="flex items-center gap-3 text-slate-900">
+          <span class="flex size-9 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-lg shadow-emerald-600/25">
+            <svg viewBox="0 0 24 24" fill="none" class="size-5" aria-hidden="true">
+              <circle cx="8.5" cy="10" r="3.5" stroke="currentColor" stroke-width="2" />
+              <path d="M11 12.5 18 19.5M15 16.5l2.5-2.5M18 19.5l2-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+          <span class="text-sm font-black tracking-tight">KeyAudit Pro</span>
+        </a>
+        <nav class="flex items-center gap-5 text-xs font-bold text-slate-600" aria-label="Helpful links">
+          <a href="/" class="hover:text-slate-900">Home</a>
+          <a href="/index.html#pricing" class="hover:text-slate-900">Pricing</a>
+          <a href="/app.html" class="hover:text-slate-900">Download app</a>
+          <a href="/support.html" class="hover:text-slate-900">Support</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto flex max-w-3xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28">
+      <p class="text-xs font-black uppercase tracking-[0.24em] text-emerald-700">404</p>
+      <h1 class="mt-4 text-4xl font-black tracking-tight sm:text-6xl">This page moved or never existed.</h1>
+      <p class="mt-5 max-w-xl text-base leading-7 text-slate-600">
+        The link may be old, or the page may have been renamed. Your KeyAudit Pro data is safe — use one of the links below to keep going.
+      </p>
+      <p class="mt-4 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-xs text-slate-500">
+        Requested: <span id="missing-path">/</span>
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="/" class="inline-flex h-12 items-center justify-center rounded-xl bg-emerald-600 px-5 text-sm font-black text-white transition hover:bg-emerald-700">Back to home</a>
+        <a href="/app.html" class="inline-flex h-12 items-center justify-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-bold text-slate-900 transition hover:bg-slate-100">Download the app</a>
+        <a href="/support.html" class="inline-flex h-12 items-center justify-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-bold text-slate-900 transition hover:bg-slate-100">Contact support</a>
+      </div>
+      <div class="mt-12 grid w-full gap-3 text-left sm:grid-cols-3">
+        <a href="/index.html#features" class="rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-emerald-200 hover:bg-emerald-50/40">
+          <p class="text-sm font-black">Why local-first</p>
+          <p class="mt-1 text-xs leading-5 text-slate-600">Keep the live key database on your device.</p>
+        </a>
+        <a href="/index.html#pricing" class="rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-emerald-200 hover:bg-emerald-50/40">
+          <p class="text-sm font-black">Pricing</p>
+          <p class="mt-1 text-xs leading-5 text-slate-600">Compare plans and start the free trial.</p>
+        </a>
+        <a href="/join.html" class="rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-emerald-200 hover:bg-emerald-50/40">
+          <p class="text-sm font-black">Join your team</p>
+          <p class="mt-1 text-xs leading-5 text-slate-600">Redeem a team invite code.</p>
+        </a>
+      </div>
+    </main>
+
+    <footer class="border-t border-slate-200">
+      <div class="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <p>&copy; 2026 Vybelive LLC. KeyAudit Pro.</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/about.html" class="hover:text-slate-900">About Us</a>
+          <a href="/privacy.html" class="hover:text-slate-900">Privacy</a>
+          <a href="/terms.html" class="hover:text-slate-900">Terms</a>
+          <a href="/support.html" class="hover:text-slate-900">Support</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('missing-path').textContent =
+        window.location.pathname + window.location.search;
+    </script>
+  </body>
 </html>
