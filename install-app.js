@@ -1,14 +1,17 @@
 (function () {
+  var APP_STORE_URL = 'https://apps.apple.com/us/app/keyaudit-pro/id6829339296';
   var standalone =
     (window.matchMedia &&
       window.matchMedia('(display-mode: standalone)').matches) ||
     window.navigator.standalone === true;
-  var mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(
-    window.navigator.userAgent || '',
-  );
+  var userAgent = window.navigator.userAgent || '';
+  var ios =
+    /iPhone|iPad|iPod/i.test(userAgent) ||
+    (/Macintosh/i.test(userAgent) && window.navigator.maxTouchPoints > 1);
+  var mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(userAgent);
 
   if (standalone) {
-    window.location.replace('/app/');
+    window.location.replace(ios ? APP_STORE_URL : '/app/');
     return;
   }
 
@@ -29,7 +32,7 @@
     var href = link.getAttribute('href') || '';
     if (/(^|\/)app\.html(?:[?#].*)?$/.test(href)) {
       event.preventDefault();
-      window.location.href = '/app/';
+      window.location.href = ios ? APP_STORE_URL : '/app/';
     }
   });
 

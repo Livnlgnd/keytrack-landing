@@ -2,6 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var ua = navigator.userAgent || '';
+        var ios =
+          /iPhone|iPad|iPod/i.test(ua) ||
+          (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+        var native =
+          (window.Capacitor &&
+            window.Capacitor.isNativePlatform &&
+            window.Capacitor.isNativePlatform()) ||
+          location.protocol === 'capacitor:' ||
+          location.protocol === 'file:';
+        if (ios && !native && location.protocol === 'https:') {
+          location.replace(
+            'https://apps.apple.com/us/app/keyaudit-pro/id6829339296',
+          );
+        }
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/app/favicon.svg" />
     <link rel="apple-touch-icon" href="/app/icons/apple-touch-icon.png" />
     <meta
@@ -21,7 +40,7 @@
     />
     <title>KeyAudit Pro</title>
     <meta name="color-scheme" content="light" />
-    <script type="module" crossorigin src="/app/assets/index-bxT1RYeG.js"></script>
+    <script type="module" crossorigin src="/app/assets/index-DO9xVnFj.js"></script>
     <link rel="modulepreload" crossorigin href="/app/assets/rolldown-runtime-WkwZ5CU-.js">
     <link rel="modulepreload" crossorigin href="/app/assets/Button-DgBjjdeB.js">
     <link rel="modulepreload" crossorigin href="/app/assets/QueryClientProvider-CQcMbond.js">
@@ -31,7 +50,7 @@
     <link rel="modulepreload" crossorigin href="/app/assets/constants-CuyHBwqo.js">
     <link rel="modulepreload" crossorigin href="/app/assets/useQuery-DO0tkSw-.js">
     <link rel="modulepreload" crossorigin href="/app/assets/location-access.service-DCNA3gfN.js">
-    <link rel="stylesheet" crossorigin href="/app/assets/index-c_2z35tg.css">
+    <link rel="stylesheet" crossorigin href="/app/assets/index-DxNinGoP.css">
   <link rel="manifest" href="/app/manifest.webmanifest"></head>
   <body>
     <div id="root"></div>

@@ -7,10 +7,14 @@
           (window.matchMedia &&
             window.matchMedia('(display-mode: standalone)').matches) ||
           window.navigator.standalone === true;
-        var mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(
-          window.navigator.userAgent || '',
-        );
-        if (standalone || mobile) {
+        var userAgent = window.navigator.userAgent || '';
+        var ios =
+          /iPhone|iPad|iPod/i.test(userAgent) ||
+          (/Macintosh/i.test(userAgent) &&
+            window.navigator.maxTouchPoints > 1);
+        if (ios) {
+          window.location.replace('https://apps.apple.com/us/app/keyaudit-pro/id6829339296');
+        } else if (standalone) {
           window.location.replace('/app/');
         }
       })();
@@ -55,9 +59,8 @@
       <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-700">Mobile &amp; web app</p>
       <h1 class="mt-3 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl">Install KeyAudit Pro on your phone</h1>
       <p class="mt-5 max-w-2xl text-base leading-8 text-slate-600">
-        KeyAudit Pro installs straight from your browser &mdash; no app store required. It runs full-screen, works
-        offline, and looks and behaves exactly like the iOS and Android apps. Scan keys, check them in and out, and
-        keep the full custody history on the device in your hand.
+        Get KeyAudit Pro for iPhone and iPad from the App Store, or install the full-screen web app on Android
+        and desktop. It works offline and keeps the complete key custody history on the device in your hand.
       </p>
 
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -67,21 +70,29 @@
           </svg>
           Open the web app
         </a>
+        <a href="https://apps.apple.com/us/app/keyaudit-pro/id6829339296" class="inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-slate-950 px-6 text-base font-black text-white transition hover:bg-slate-800">
+          Download on the App Store
+        </a>
         <a href="index.html#pricing" class="inline-flex h-14 items-center justify-center rounded-2xl border border-slate-300 bg-white px-6 text-base font-bold text-slate-900 transition hover:bg-slate-100">See pricing</a>
       </div>
-      <p class="mt-3 text-xs text-slate-500">Already installed? Opening this link launches the app.</p>
+      <p class="mt-3 text-xs text-slate-500">On iPhone or iPad, use the App Store button above. On Android or desktop, the web app opens full-screen.</p>
 
       <div class="mt-10 grid gap-4 sm:grid-cols-3">
         <section class="rounded-3xl border border-slate-200 bg-white shadow-sm p-6">
           <h2 class="flex items-center gap-2 text-lg font-black text-slate-900">
             <span class="text-emerald-700">iPhone &amp; iPad</span>
           </h2>
-          <ol class="mt-3 space-y-2 text-sm leading-6">
-            <li><span class="font-bold text-slate-900">1.</span> Open <span class="font-bold text-slate-900">keyauditpro.com/app</span> in Safari.</li>
-            <li><span class="font-bold text-slate-900">2.</span> Tap the <span class="font-bold text-slate-900">Share</span> button.</li>
-            <li><span class="font-bold text-slate-900">3.</span> Choose <span class="font-bold text-slate-900">Add to Home Screen</span>.</li>
-          </ol>
-          <p class="mt-3 text-xs leading-5 text-slate-500">The KeyAudit icon appears on your home screen and opens full-screen.</p>
+          <img
+            src="assets/keyaudit-pro-app-store-qr.png"
+            width="720"
+            height="720"
+            alt="Scan to download KeyAudit Pro from the App Store"
+            class="mx-auto mt-4 w-56 rounded-2xl border border-slate-200 bg-white p-2"
+          />
+          <p class="mt-3 text-xs leading-5 text-slate-500">
+            Scan with the Camera app on iPhone or iPad, or
+            <a href="https://apps.apple.com/us/app/keyaudit-pro/id6829339296" class="font-bold text-emerald-700 underline underline-offset-2">open the App Store</a>.
+          </p>
         </section>
 
         <section class="rounded-3xl border border-slate-200 bg-white shadow-sm p-6">
@@ -126,9 +137,10 @@
       <section class="mt-4 rounded-3xl border border-slate-200 bg-white shadow-sm p-6">
         <h2 class="text-lg font-black text-slate-900">Already using the desktop app?</h2>
         <p class="mt-2 text-sm leading-6 text-slate-600">
-          Install the web app on the same device or a phone to check keys in and out on the floor. Each device keeps its
-          own local copy; apply your signed license under <span class="font-bold text-slate-900">Settings &rarr; License</span>
-          to unlock full use, or pair a phone with a desktop on the same network.
+          Install the iPhone/iPad app from the App Store, or the web app on Android and desktop, to check keys in
+          and out on the floor. Each device keeps its own local copy; apply your signed license under
+          <span class="font-bold text-slate-900">Settings &rarr; License</span> to unlock full use, or pair a phone with
+          a desktop on the same network.
         </p>
       </section>
     </main>
