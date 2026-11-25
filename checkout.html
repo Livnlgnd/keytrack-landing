@@ -5,130 +5,567 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Checkout | KeyAudit Pro</title>
     <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#ffffff" />
     <script src="https://js.stripe.com/dahlia/stripe.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <style>
       :root {
         color-scheme: light;
-        font-family:
-          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
-        background: #f4f6f8;
-        color: #1f2937;
+        --ink: #0f172a;
+        --muted: #64748b;
+        --line: #e2e8f0;
+        --accent: #047857;
+        --accent-strong: #065f46;
+        --accent-soft: #ecfdf5;
+        --page: #f8fafc;
       }
       * {
         box-sizing: border-box;
       }
       body {
         margin: 0;
-        min-height: 100vh;
-        padding: 32px 16px;
+        background: var(--page);
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: inherit;
+      }
+      .site-header {
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+      .container {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+      .site-header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: var(--ink);
+      }
+      .brand-mark {
         display: grid;
+        width: 38px;
+        height: 38px;
         place-items: center;
+        border-radius: 12px;
+        background: #059669;
+        color: #fff;
+        box-shadow: 0 10px 15px -3px rgba(5, 150, 105, 0.25);
       }
-      main {
-        width: 100%;
-        max-width: 720px;
-        border-radius: 16px;
-        background: #ffffff;
-        box-shadow: 0 20px 50px rgb(15 23 42 / 10%);
-        padding: 28px;
+      .brand-mark svg {
+        width: 20px;
+        height: 20px;
       }
-      h1 {
+      .brand strong {
+        display: block;
+        font-size: 14px;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+      }
+      .brand small {
+        display: block;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .site-nav {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #475569;
+      }
+      .site-nav a {
+        text-decoration: none;
+        transition: color 120ms ease;
+      }
+      .site-nav a:hover {
+        color: var(--ink);
+      }
+      .nav-cta {
+        border-radius: 10px;
+        background: #059669;
+        padding: 9px 14px;
+        color: #fff !important;
+      }
+      .nav-cta:hover {
+        background: var(--accent) !important;
+      }
+
+      .checkout-page {
+        display: grid;
+        min-height: calc(100vh - 190px);
+        place-items: center;
+        padding: 40px 0 68px;
+      }
+      .checkout-shell {
+        width: min(900px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+      .checkout-card {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: #fff;
+        box-shadow: 0 26px 80px -45px rgba(15, 23, 42, 0.45);
+      }
+      .checkout-head {
+        border-bottom: 1px solid var(--line);
+        padding: 26px 28px;
+      }
+      .eyebrow {
         margin: 0 0 6px;
-        font-size: 24px;
+        color: var(--accent);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
       }
-      p {
-        margin: 0 0 22px;
-        color: #64748b;
+      .checkout-head h1 {
+        margin: 0 0 6px;
+        font-size: 26px;
+        letter-spacing: -0.035em;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .small {
+        font-size: 12px;
+        line-height: 1.6;
+      }
+      .checkout-body {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+        padding: 26px 28px 30px;
+      }
+      .checkout-options {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .plan-group {
+        margin: 0;
+        border: 0;
+        padding: 0;
+      }
+      .plan-group + .plan-group {
+        margin-top: 16px;
+      }
+      .plan-group legend {
+        margin-bottom: 8px;
+        padding: 0;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+      .plan-group legend small {
+        display: block;
+        margin-top: 2px;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0;
+        text-transform: none;
+        color: var(--muted);
+      }
+      .plan-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .plan-option {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        border: 2px solid var(--line);
+        border-radius: 14px;
+        padding: 12px 14px;
+        cursor: pointer;
+        transition:
+          border 120ms ease,
+          background 120ms ease;
+      }
+      .plan-option:hover {
+        border-color: #a7f3d0;
+        background: #f8fdfb;
+      }
+      .plan-option.is-selected {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+      .plan-option:has(input:disabled) {
+        cursor: default;
+      }
+      .plan-option input {
+        margin-top: 3px;
+        accent-color: var(--accent);
+      }
+      .plan-copy {
+        min-width: 0;
+      }
+      .plan-copy strong {
+        display: block;
+        font-size: 13px;
+        font-weight: 900;
+      }
+      .plan-copy small {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 11px;
         line-height: 1.5;
       }
-      .plan-label {
+      .option-price {
+        margin-left: auto;
+        padding-left: 10px;
+        text-align: right;
+        white-space: nowrap;
+      }
+      .option-price span {
         display: block;
-        margin-bottom: 8px;
-        font-size: 14px;
-        font-weight: 600;
+        font-size: 15px;
+        font-weight: 900;
+        color: var(--ink);
       }
-      .plan-row {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 10px;
-        margin-bottom: 22px;
+      .option-price small {
+        display: block;
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--muted);
       }
-      select,
-      button {
-        min-height: 44px;
-        border-radius: 8px;
-        font: inherit;
+      .plan-loading {
+        border: 1px dashed var(--line);
+        border-radius: 14px;
+        padding: 22px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 12px;
       }
-      select {
-        width: 100%;
-        border: 1px solid #cbd5e1;
-        background: #ffffff;
-        padding: 0 12px;
-        color: #1f2937;
+      .plan-summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        border-radius: 16px;
+        background: #f8fafc;
+        border: 1px solid var(--line);
+        padding: 14px 16px;
       }
-      button {
+      .plan-summary strong {
+        display: block;
+        font-size: 13px;
+        font-weight: 900;
+      }
+      .plan-summary span {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.5;
+      }
+      .plan-price {
+        text-align: right;
+        white-space: nowrap;
+      }
+      .plan-price span {
+        margin: 0;
+        color: var(--ink);
+        font-size: 20px;
+        font-weight: 900;
+      }
+      .plan-price small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
         border: 0;
-        background: #0570de;
-        color: #ffffff;
-        padding: 0 18px;
-        font-weight: 600;
+        border-radius: 12px;
+        background: #059669;
+        padding: 0 20px;
+        color: #fff;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 900;
         cursor: pointer;
+        transition: background-color 140ms ease;
       }
-      button:disabled,
-      select:disabled {
+      .button:hover:not(:disabled) {
+        background: var(--accent);
+      }
+      .button:disabled {
         cursor: not-allowed;
-        opacity: 0.6;
+        opacity: 0.55;
+      }
+      .button:focus-visible,
+      .plan-option input:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .checkout-footer-note {
+        margin: 0;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.6;
+        text-align: center;
+      }
+      .checkout-footer-note a {
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .checkout-side {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        align-self: start;
+        position: sticky;
+        top: 24px;
+      }
+      .stripe-wrap {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #fff;
+        padding: 16px;
       }
       #checkout-form {
-        min-height: 120px;
+        min-height: 110px;
       }
-      #status {
-        margin-top: 18px;
-        padding: 12px 14px;
-        border-radius: 8px;
+      .status {
+        margin-top: 14px;
+        border-radius: 10px;
         background: #f1f5f9;
+        padding: 11px 13px;
         color: #475569;
-        font-size: 14px;
-        line-height: 1.4;
+        font-size: 11px;
+        line-height: 1.5;
       }
-      #status[data-state="error"] {
+      .status[data-state="error"] {
         background: #fef2f2;
         color: #b91c1c;
       }
-      #status[data-state="success"],
-      #status[data-state="ready"] {
-        background: #f0fdf4;
-        color: #15803d;
+      .status[data-state="ready"],
+      .status[data-state="success"] {
+        background: #ecfdf5;
+        color: var(--accent);
       }
-      @media (max-width: 520px) {
-        .plan-row {
+      .notice {
+        border: 1px solid #a7f3d0;
+        border-radius: 14px;
+        background: #f0fdf9;
+        padding: 13px 15px;
+        color: #065f46;
+        font-size: 11px;
+        line-height: 1.6;
+      }
+      .notice strong {
+        display: block;
+        margin-bottom: 2px;
+        font-weight: 900;
+      }
+      .secure-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .site-footer {
+        border-top: 1px solid var(--line);
+        background: #fff;
+      }
+      .site-footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 22px 0;
+      }
+      .site-footer-inner p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 11px;
+        font-weight: 700;
+        color: #475569;
+      }
+      .footer-links a {
+        text-decoration: none;
+      }
+      .footer-links a:hover {
+        color: var(--ink);
+      }
+      @media (max-width: 860px) {
+        .checkout-body {
           grid-template-columns: 1fr;
+          padding: 20px;
+        }
+        .checkout-side {
+          position: static;
+        }
+        .checkout-head {
+          padding: 20px;
+        }
+        .checkout-page {
+          padding-top: 24px;
+        }
+      }
+      @media (max-width: 640px) {
+        .site-nav a:not(.nav-cta) {
+          display: none;
+        }
+        .checkout-head h1 {
+          font-size: 22px;
+        }
+        .option-price span {
+          font-size: 14px;
         }
       }
     </style>
     <meta name="color-scheme" content="light" />
     <style>html{color-scheme:light}</style>
-      <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
+    <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
   </head>
   <body>
-    <main>
-      <h1>Complete your purchase</h1>
-      <p>Secure payment powered by Stripe.</p>
-
-      <label class="plan-label" for="plan">Choose a plan</label>
-      <div class="plan-row">
-        <select id="plan" disabled>
-          <option>Loading plans...</option>
-        </select>
-        <button id="start" type="button" disabled>Continue to payment</button>
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="./index.html">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="8.5" cy="10" r="3.5" stroke="currentColor" stroke-width="2" />
+              <path d="M11 12.5 18 19.5M15 16.5l2.5-2.5M18 19.5l2-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+          <span>
+            <strong>KeyAudit Pro</strong>
+            <small>Secure license checkout</small>
+          </span>
+        </a>
+        <nav class="site-nav">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#pricing">Pricing</a>
+          <a href="./license.html">License lookup</a>
+          <a href="./support.html">Support</a>
+          <a class="nav-cta" href="./index.html#pricing">Compare plans</a>
+        </nav>
       </div>
+    </header>
 
-      <div id="checkout-form"></div>
-      <div id="status" data-state="loading">Preparing secure checkout...</div>
+    <main class="checkout-page">
+      <div class="checkout-shell">
+        <div class="checkout-card">
+          <div class="checkout-head">
+            <p class="eyebrow">Secure checkout</p>
+            <h1>Complete your purchase</h1>
+            <p class="muted small" style="margin: 0">
+              Choose a license or add-on, then pay with Stripe. Your license key is
+              issued immediately after checkout.
+            </p>
+          </div>
+
+          <div class="checkout-body">
+            <form class="checkout-options" id="plan-form">
+              <div id="plan-groups">
+                <div class="plan-loading">Loading plans…</div>
+              </div>
+
+              <div class="plan-summary" id="plan-summary" hidden>
+                <div>
+                  <strong id="summary-name">—</strong>
+                  <span id="summary-note">—</span>
+                </div>
+                <div class="plan-price">
+                  <span id="summary-price">—</span>
+                  <small id="summary-period">USD</small>
+                </div>
+              </div>
+
+              <button class="button" id="continue" type="submit" disabled>
+                Continue to secure payment
+              </button>
+              <p class="checkout-footer-note">
+                By purchasing, you agree to the
+                <a href="./terms.html">Terms of Service</a> and
+                <a href="./privacy.html">Privacy Policy</a>.
+                Need a different plan?
+                <a href="./index.html#pricing">Compare plans</a>.
+              </p>
+            </form>
+
+            <div class="checkout-side">
+              <div class="stripe-wrap" id="stripe-wrap">
+                <div id="checkout-form"></div>
+                <div id="status" class="status" data-state="loading">
+                  Preparing secure checkout…
+                </div>
+              </div>
+              <div class="notice">
+                <strong>Secure checkout by Stripe.</strong>
+                KeyAudit Pro never sees your card details. Desktop licenses are a
+                one-time charge. Cloud Backup and LAN Sync renew until canceled.
+              </div>
+              <div class="secure-line">
+                <span aria-hidden="true">🔒</span>
+                <span>Encrypted checkout · No account required</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p>© 2026 KeyAudit Pro. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="./index.html">Home</a>
+          <a href="./license.html">License lookup</a>
+          <a href="./support.html">Support</a>
+          <a href="./privacy.html">Privacy</a>
+          <a href="./terms.html">Terms</a>
+        </div>
+      </div>
+    </footer>
 
     <script>
       const STRIPE_PUBLISHABLE_KEY =
@@ -138,67 +575,216 @@
       const PLANS_API_URL =
         'https://keytrack-license.joshua-c77.workers.dev/api/stripe/plans';
 
+      const GROUPS = [
+        {
+          kind: 'license',
+          label: 'Desktop license',
+          hint: 'One-time purchase · no subscription',
+        },
+        {
+          kind: 'cloud-backup',
+          label: 'Cloud Backup add-on',
+          hint: 'Monthly or yearly · requires a desktop license',
+        },
+        {
+          kind: 'lan-sync',
+          label: 'LAN Sync add-on',
+          hint: 'Monthly or yearly · requires a desktop license',
+        },
+      ];
+
+      // Keep in sync with the pricing table in index.html and Stripe prices.
+      const PLAN_META = {
+        price_1UXR4dPlnAdoCAVXibFimyvV: {
+          amount: '$500',
+          period: 'one-time',
+          detail: 'Apartment · up to 100 units · leasing vocabulary',
+          billing: 'One-time · per site · no mandatory subscription',
+        },
+        price_1UXR6XPlnAdoCAVXGWiueWL5: {
+          amount: '$1,900',
+          period: 'one-time',
+          detail: 'Apartment · up to 500 units · growing portfolio',
+          billing: 'One-time · per site · no mandatory subscription',
+        },
+        price_1UXR7tPlnAdoCAVXpLHpYqxU: {
+          amount: '$3,150',
+          period: 'one-time',
+          detail: 'Apartment · up to 1,000 units · multi-building',
+          billing: 'One-time · per site · no mandatory subscription',
+        },
+        price_1UXR9JPlnAdoCAVXhrufJl9x: {
+          amount: '$500',
+          period: 'one-time',
+          detail: 'Dealership · up to 100 vehicles · stock and VIN',
+          billing: 'One-time · per site · no mandatory subscription',
+        },
+        price_1UXRCdPlnAdoCAVXBreyyxCT: {
+          amount: '$20',
+          period: 'per month',
+          detail: 'Encrypted backup · cancel anytime',
+          billing: 'Monthly subscription · cancel anytime',
+        },
+        price_1UXRCdPlnAdoCAVXyb9aNytz: {
+          amount: '$200',
+          period: 'per year',
+          detail: 'Encrypted backup · two months free',
+          billing: 'Yearly subscription · cancel anytime',
+        },
+        price_1UXRDhPlnAdoCAVXFNF7ujZU: {
+          amount: '$15',
+          period: 'per month',
+          detail: 'Local network sync · cancel anytime',
+          billing: 'Monthly subscription · cancel anytime',
+        },
+        price_1UXRDvPlnAdoCAVXqHA4doFy: {
+          amount: '$150',
+          period: 'per year',
+          detail: 'Local network sync · two months free',
+          billing: 'Yearly subscription · cancel anytime',
+        },
+      };
+
       const appearance = {
         theme: 'stripe',
         labels: 'auto',
         inputs: 'spaced',
         variables: {
-          borderRadius: '4px',
+          borderRadius: '8px',
           colorBackground: '#ffffff',
-          colorDanger: '#df1b41',
-          colorPrimary: '#0570de',
-          colorSuccess: '#00c853',
-          colorText: '#30313d',
-          fontFamily: 'default',
-          fontSizeBase: '16px',
+          colorDanger: '#b91c1c',
+          colorPrimary: '#047857',
+          colorSuccess: '#047857',
+          colorText: '#0f172a',
+          fontFamily: 'Inter, system-ui, sans-serif',
+          fontSizeBase: '15px',
           spacingUnit: '4px',
         },
       };
 
+      const planGroups = document.getElementById('plan-groups');
+      const planForm = document.getElementById('plan-form');
+      const planSummary = document.getElementById('plan-summary');
       const statusBox = document.getElementById('status');
-      const planSelect = document.getElementById('plan');
-      const startButton = document.getElementById('start');
+      const continueButton = document.getElementById('continue');
+      const stripeWrap = document.getElementById('stripe-wrap');
+      const summaryName = document.getElementById('summary-name');
+      const summaryNote = document.getElementById('summary-note');
+      const summaryPrice = document.getElementById('summary-price');
+      const summaryPeriod = document.getElementById('summary-period');
+
+      let plans = [];
+      let checkoutReady = false;
 
       function setStatus(message, state) {
         statusBox.textContent = message;
         statusBox.dataset.state = state;
       }
 
-      function renderPlans(plans, defaultPriceId) {
-        const groups = [
-          ['license', 'Licenses'],
-          ['cloud-backup', 'Cloud Backup'],
-          ['lan-sync', 'LAN Sync'],
-        ];
-        const preselected =
-          new URLSearchParams(window.location.search).get('price_id') ||
-          defaultPriceId;
+      function radios() {
+        return [...document.querySelectorAll('input[name="plan"]')];
+      }
 
-        planSelect.replaceChildren();
-        for (const [kind, label] of groups) {
-          const items = plans
-            .filter((plan) => plan.kind === kind)
-            .sort((a, b) => a.name.localeCompare(b.name));
+      function metaFor(plan) {
+        return (
+          PLAN_META[plan.priceId] ?? {
+            amount: '',
+            period: '',
+            detail: plan.kind === 'license' ? 'One-time desktop license' : 'Add-on subscription',
+            billing:
+              plan.kind === 'license'
+                ? 'One-time purchase'
+                : 'Subscription · cancel anytime',
+          }
+        );
+      }
+
+      function selectedPlan() {
+        const checked = radios().find((radio) => radio.checked);
+        return plans.find((plan) => plan.priceId === checked?.value) ?? plans[0];
+      }
+
+      function updateSummary() {
+        const plan = selectedPlan();
+        if (!plan) return;
+        const meta = metaFor(plan);
+        summaryName.textContent = plan.name;
+        summaryNote.textContent = meta.billing;
+        summaryPrice.textContent = meta.amount || 'See total';
+        summaryPeriod.textContent = meta.amount ? 'USD' : 'at payment';
+        for (const radio of radios()) {
+          radio.closest('.plan-option')?.classList.toggle('is-selected', radio.checked);
+        }
+      }
+
+      function renderPlans(list, preselected) {
+        planGroups.replaceChildren();
+
+        for (const group of GROUPS) {
+          const items = list.filter((plan) => plan.kind === group.kind);
           if (!items.length) continue;
 
-          const group = document.createElement('optgroup');
-          group.label = label;
+          const fieldset = document.createElement('fieldset');
+          fieldset.className = 'plan-group';
+
+          const legend = document.createElement('legend');
+          legend.textContent = group.label;
+          const hint = document.createElement('small');
+          hint.textContent = group.hint;
+          legend.append(hint);
+          fieldset.append(legend);
+
+          const options = document.createElement('div');
+          options.className = 'plan-options';
+
           for (const plan of items) {
-            const option = document.createElement('option');
-            option.value = plan.priceId;
-            option.textContent = plan.name;
-            if (plan.priceId === preselected) option.selected = true;
-            group.append(option);
+            const meta = metaFor(plan);
+            const label = document.createElement('label');
+            label.className = 'plan-option';
+
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = 'plan';
+            input.value = plan.priceId;
+            input.checked = plan.priceId === preselected;
+
+            const copy = document.createElement('span');
+            copy.className = 'plan-copy';
+            const name = document.createElement('strong');
+            name.textContent = plan.name;
+            const detail = document.createElement('small');
+            detail.textContent = meta.detail;
+            copy.append(name, detail);
+
+            const price = document.createElement('span');
+            price.className = 'option-price';
+            if (meta.amount) {
+              const amount = document.createElement('span');
+              amount.textContent = meta.amount;
+              const period = document.createElement('small');
+              period.textContent = meta.period;
+              price.append(amount, period);
+            } else {
+              const period = document.createElement('small');
+              period.textContent = 'at payment';
+              price.append(period);
+            }
+
+            label.append(input, copy, price);
+            options.append(label);
           }
-          planSelect.append(group);
+
+          fieldset.append(options);
+          planGroups.append(fieldset);
         }
 
-        if (!planSelect.options.length) {
-          throw new Error('No checkout plans are available.');
+        if (!radios().some((radio) => radio.checked) && radios().length) {
+          radios()[0].checked = true;
         }
 
-        planSelect.disabled = false;
-        startButton.disabled = false;
+        planSummary.hidden = false;
+        continueButton.disabled = false;
+        updateSummary();
         setStatus('Choose a plan, then continue to payment.', 'ready');
       }
 
@@ -209,9 +795,26 @@
           if (!response.ok || !Array.isArray(json.plans)) {
             throw new Error(json.error || 'Unable to load plans.');
           }
-          renderPlans(json.plans, json.defaultPriceId);
+
+          if (!json.plans.length) {
+            throw new Error('No checkout plans are available.');
+          }
+
+          plans = json.plans;
+          const requested = new URLSearchParams(window.location.search).get('price_id');
+          const preselected = [requested, json.defaultPriceId].find(
+            (priceId) => priceId && plans.some((plan) => plan.priceId === priceId),
+          );
+          renderPlans(plans, preselected ?? plans[0].priceId);
+
+          planForm.addEventListener('change', (event) => {
+            if (checkoutReady) return;
+            if (event.target.name !== 'plan') return;
+            updateSummary();
+          });
         } catch (error) {
           console.error('Plans error:', error);
+          continueButton.disabled = true;
           setStatus(
             error instanceof Error ? error.message : 'Unable to load plans.',
             'error',
@@ -220,9 +823,11 @@
       }
 
       async function mountCheckout(priceId) {
-        startButton.disabled = true;
-        planSelect.disabled = true;
-        setStatus('Preparing secure checkout...', 'loading');
+        if (checkoutReady) return;
+        checkoutReady = true;
+        continueButton.disabled = true;
+        radios().forEach((radio) => (radio.disabled = true));
+        setStatus('Preparing secure checkout…', 'loading');
 
         try {
           const response = await fetch(CHECKOUT_API_URL, {
@@ -230,8 +835,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ price_id: priceId }),
           });
-          const json = await response.json();
-
+          const json = await response.json().catch(() => ({}));
           if (!response.ok || !json.client_secret) {
             throw new Error(json.error || 'Unable to start checkout.');
           }
@@ -244,41 +848,51 @@
           const form = checkout.createForm({ layout: 'expanded' });
           form.mount('#checkout-form');
 
-          const loadActionsResult = await checkout.loadActions();
-          if (loadActionsResult.type !== 'success') {
-            throw new Error('Unable to load checkout actions.');
+          const actionsResult = await checkout.loadActions();
+          if (actionsResult.type !== 'success') {
+            throw new Error('Unable to load the payment form.');
           }
 
           form.on('confirm', async (event) => {
             try {
-              await loadActionsResult.actions.confirm({
-                formConfirmEvent: event,
-              });
+              await actionsResult.actions.confirm({ formConfirmEvent: event });
             } catch (error) {
-              console.error('Payment confirmation error:', error);
               setStatus(
                 error instanceof Error
                   ? error.message
                   : 'Payment confirmation failed.',
                 'error',
               );
+              checkoutReady = false;
+              continueButton.disabled = false;
+              radios().forEach((radio) => (radio.disabled = false));
             }
           });
 
-          setStatus('Checkout is ready.', 'ready');
+          setStatus(
+            'Payment form ready. Complete checkout to receive your license.',
+            'ready',
+          );
+          continueButton.textContent = 'Payment form ready below';
+
+          if (window.matchMedia('(max-width: 860px)').matches) {
+            stripeWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         } catch (error) {
-          console.error('Checkout error:', error);
+          checkoutReady = false;
+          continueButton.disabled = false;
+          radios().forEach((radio) => (radio.disabled = false));
           setStatus(
             error instanceof Error ? error.message : 'Unable to load checkout.',
             'error',
           );
-          planSelect.disabled = false;
-          startButton.disabled = false;
         }
       }
 
-      startButton.addEventListener('click', () => {
-        if (planSelect.value) mountCheckout(planSelect.value);
+      planForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const plan = selectedPlan();
+        if (plan) void mountCheckout(plan.priceId);
       });
 
       loadPlans();
