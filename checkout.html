@@ -7,6 +7,7 @@
     <meta name="robots" content="noindex,nofollow" />
     <meta name="theme-color" content="#ffffff" />
     <script src="https://js.stripe.com/dahlia/stripe.js"></script>
+    <script src="/assets/ads-tracking.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -874,6 +875,10 @@
             'ready',
           );
           continueButton.textContent = 'Payment form ready below';
+
+          if (window.KeyAuditAds) {
+            window.KeyAuditAds.beginCheckout();
+          }
 
           if (window.matchMedia('(max-width: 860px)').matches) {
             stripeWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });

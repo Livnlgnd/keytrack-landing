@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <script src="/install-app.js"></script>
+    <script src="/assets/ads-tracking.js" defer></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Get Your KeyAudit Pro License | Retrieve Paid License</title>
@@ -279,6 +280,14 @@
             : '';
           setStatus('License ready for ' + data.company + '.' + expires + lanSync + ' Copy the key and apply it in KeyAudit Pro.', 'success');
           copyButton.focus();
+
+          if (window.KeyAuditAds) {
+            window.KeyAuditAds.purchase({
+              transactionId: data.sessionId || orderId,
+              value: typeof data.amountTotal === 'number' ? data.amountTotal / 100 : undefined,
+              currency: data.currency ? String(data.currency).toUpperCase() : undefined,
+            });
+          }
         } catch (error) {
           setStatus(error instanceof Error ? error.message : 'That license could not be issued.', 'error');
         } finally {
